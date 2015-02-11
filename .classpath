@@ -13,29 +13,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-aop"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-aspects"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-beans"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-context"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-context-support"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-core"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-expression"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-framework-bom"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-instrument"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-instrument-tomcat"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-jdbc"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-jms"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-orm"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-orm-hibernate4"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-oxm"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-struts"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-test"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-test-mvc"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-tx"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-web"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-webmvc"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-webmvc-portlet"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spring-webmvc-tiles3"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/antlr-2.7.7.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance-1.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/asm-3.3.jar"/>
