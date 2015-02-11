@@ -3,6 +3,29 @@
 	<name>chapter15</name>
 	<comment></comment>
 	<projects>
+		<project>spring-webmvc-portlet</project>
+		<project>spring-context</project>
+		<project>spring-context-support</project>
+		<project>spring-aop</project>
+		<project>spring-test-mvc</project>
+		<project>spring-struts</project>
+		<project>spring-beans</project>
+		<project>spring-instrument</project>
+		<project>spring-core</project>
+		<project>spring-webmvc-tiles3</project>
+		<project>spring-aspects</project>
+		<project>spring-webmvc</project>
+		<project>spring-tx</project>
+		<project>spring-oxm</project>
+		<project>spring-jms</project>
+		<project>spring-test</project>
+		<project>spring-expression</project>
+		<project>spring-framework-bom</project>
+		<project>spring-orm-hibernate4</project>
+		<project>spring-web</project>
+		<project>spring-instrument-tomcat</project>
+		<project>spring-orm</project>
+		<project>spring-jdbc</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
