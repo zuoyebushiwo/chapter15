@@ -37,7 +37,7 @@
 		</property>
 	</bean>
 
-	<bean
+	<!--<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"
 		p:messageConverters-ref="messageConverters">
 		<property name="webBindingInitializer">
@@ -69,7 +69,7 @@
 				<value>com.baobaotao.domain.User</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 <!-- 
 
 	FreeMarker基础设施及视图解析器配置
