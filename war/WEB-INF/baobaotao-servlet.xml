@@ -15,9 +15,9 @@
 		p:order="100" p:viewClass="org.springframework.web.servlet.view.JstlView"
 		p:prefix="/WEB-INF/views/" p:suffix=".jsp" />
 
-	<!-- <mvc:annotation-driven conversion-service="conversionService" />
+	<mvc:annotation-driven conversion-service="conversionService" />
 
-	国际化资源 
+	<!--国际化资源  -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -70,7 +70,7 @@
 			</list>
 		</property>
 	</bean>
-
+<!-- 
 
 	FreeMarker基础设施及视图解析器配置
 	<bean
@@ -156,7 +156,7 @@
     <bean id="rpe" class="com.baobaotao.web.ResourcePathExposer"
           init-method="init"/> 
     <mvc:resources mapping="#{rpe.resourceRoot}/**" 
-                   location="/" cache-period="31536000"/>    -->
-          
+                   location="/" cache-period="31536000"/>   
+           -->
         
 </beans>
