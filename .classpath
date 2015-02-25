@@ -80,7 +80,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/standard-1.1.2.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/iText-2.1.7.jar"/>
 	<classpathentry kind="lib" path="/chapter14/war/WEB-INF/lib/xstream-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/zhangxuej/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi/3.6/3f9d1a3dd2561f6ef09e268aa284e9f0807bcc68/poi-3.6.jar" sourcepath="C:/Users/zhangxuej/.gradle/caches/modules-2/files-2.1/org.apache.poi/poi/3.6/c98721273319cf0cc7eee3a63e92ad41090ad046/poi-3.6-sources.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/aspectjweaver-1.7.0.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jettison-1.3.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/xstream-1.4.jar"/>
