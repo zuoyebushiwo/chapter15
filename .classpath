@@ -89,5 +89,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/poi-3.2-FINAL.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-1.4.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-jsptags-1.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/iTextAsian.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

@@ -10,13 +10,13 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.baobaotao.domain.User;
 
 public class UserListExcelView extends AbstractExcelView {
 	
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	protected void buildExcelDocument(Map<String, Object> model,
 			HSSFWorkbook workbook, HttpServletRequest request,

@@ -475,6 +475,69 @@ public class UserController {
 	}
 	
 	/**
+	 * @param mm
+	 * @return
+	 */
+	@RequestMapping(value = "/showUserListByFtl")
+	public String showUserListInFtl(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "userListFtl";
+	}
+	
+	@RequestMapping(value = "/showUserListByXls")
+	public String showUserListInExcel(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "userListExcel";
+	}
+	
+	@RequestMapping(value = "/showUserListByPdf")
+	public String showUserListInPdf(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "userListPdf";
+	}
+	
+	/**
 	 * 在控制器初始化时调用
 	 * 
 	 * @param binder
