@@ -20,7 +20,7 @@
   </c:forEach>
 </spring:bind>
 
-  <form:form commandName="user"  action="/chapter15/user/handle92.html">
+  <form:form commandName="user"  action="/user/handle92.html">
     <table>
 	    <tr>
 	       <td>用户名：</td>

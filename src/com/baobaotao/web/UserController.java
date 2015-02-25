@@ -2,7 +2,11 @@ package com.baobaotao.web;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -429,6 +434,47 @@ public class UserController {
 	}
 	
 	/**
+	 * 在处理方法中通用代码进行校验
+	 * 
+	 * @param user
+	 * @param bindingResult 声明一个BingdingResult入参
+	 * @return
+	 */
+	@RequestMapping(value = "/handle92")
+	public String handle92(@ModelAttribute("user") User user,
+			BindingResult bindingResult) {
+		// 使用校验工具类进行校验
+		ValidationUtils.rejectIfEmptyOrWhitespace(bindingResult, "userName", "required");
+		if ("aaaa".equalsIgnoreCase(user.getUserName())) {
+			bindingResult.rejectValue("userName", "reserved");
+		} 
+		if (bindingResult.hasErrors()) {
+			return "/user/register4";
+		} else {
+			return "/user/showUser";
+		}
+	}
+	
+	@RequestMapping(value = "/showUserList")
+	public String showUserList(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "user/userList";
+	}
+	
+	/**
 	 * 在控制器初始化时调用
 	 * 
 	 * @param binder
@@ -437,6 +483,8 @@ public class UserController {
 	public void initBinder(WebDataBinder binder) {
 		// 注册指定自定义的编辑器
 		binder.registerCustomEditor(User.class, new UserEditor());
+		// 在进行数据绑定时使用校验器
+		binder.setValidator(new UserValidator());
 	}
 
 }
