@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=gbk" pageEncoding="gbk"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-<title>æ–°å¢žç”¨æˆ·</title>
+<title>ÐÂÔöÓÃ»§</title>
   <style>
      .errorClass{color:red}
   </style>
@@ -15,21 +15,21 @@
      <form:errors path="*" cssClass="errorClass" element="div"/>
     <table>
 	    <tr>
-	       <td>ç”¨æˆ·åï¼š</td>
+	       <td>ÓÃ»§Ãû£º</td>
 	       <td>
 	          <form:errors path="userName" cssClass="errorClass" element="div"/>
 	          <form:input path="userName"  />
 	       </td>
 	    </tr>
 	    <tr>
-	     <td>å¯†ç ï¼š</td>
+	     <td>ÃÜÂë£º</td>
 	       <td>
 	          <form:errors path="password" cssClass="errorClass"  element="div"/>
 	          <form:password path="password" />  
 	       </td>
 	    </tr>
 	    <tr>
-	     <td>å§“åï¼š</td>
+	     <td>ÐÕÃû£º</td>
 	       <td>
 	          <form:errors  path="realName" cssClass="errorClass" element="div"/>
 	          <form:input path="realName" />
@@ -37,21 +37,21 @@
 	       </td>
 	    </tr>
 	    <tr>
-	     <td>ç”Ÿæ—¥ï¼š</td>
+	     <td>ÉúÈÕ£º</td>
 	       <td>
 	         <form:errors path="birthday" cssClass="errorClass" element="div"/>
 	         <form:input path="birthday" />    
 	       </td>
 	    </tr>
 	    <tr>
-	     <td>å·¥èµ„ï¼š</td>
+	     <td>¹¤×Ê£º</td>
 	       <td>
 	         <form:errors path="salary" cssClass="errorClass" element="div"/>
 	         <form:input path="salary" />
 	       </td>
 	    </tr>
 	    <tr>
-	     <td colspan="2"><input type="submit" name="æäº¤"/></td>
+	     <td colspan="2"><input type="submit" name="Ìá½»"/></td>
 	    </tr>	    
     </table>
   </form:form>

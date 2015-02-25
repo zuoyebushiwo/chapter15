@@ -8,7 +8,6 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -38,7 +37,7 @@ public class User {
 	@XStreamAsAttribute
 	@Past
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date birthday;
+	private Date birthday = new Date();
 
 	@XStreamAsAttribute
 	@DecimalMin(value = "1000.00")

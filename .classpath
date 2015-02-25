@@ -87,5 +87,7 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-all-1.6.9.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/freemarker-2.3.19.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/poi-3.2-FINAL.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-1.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/joda-time-jsptags-1.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

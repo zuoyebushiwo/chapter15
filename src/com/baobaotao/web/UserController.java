@@ -2,37 +2,75 @@ package com.baobaotao.web;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import com.baobaotao.UserService;
+import com.baobaotao.domain.Dept;
 import com.baobaotao.domain.User;
+import com.baobaotao.domain.UserEditor;
 
 @Controller
 @RequestMapping("/user")
+@SessionAttributes("user") // 将模型属性自动保存到HttpSession中
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birthday;
+	@NumberFormat(pattern = "#,###.##")
+	private long salay;
+	
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public long getSalay() {
+		return salay;
+	}
+
+	public void setSalay(long salay) {
+		this.salay = salay;
+	}
 
 	/**
 	 * 处理/user的请求，不过请求的方法必须为POST
@@ -228,6 +266,177 @@ public class UserController {
 		Resource res = new ClassPathResource("/image.jpg");
 		byte[] fileData = FileCopyUtils.copyToByteArray(res.getInputStream());
 		return fileData;
+	}
+	
+	/**
+	 * 和@RequestBody/@ResponseBody类似，HttpEntity<?>不但可以访问请求及响应报文的数据，
+	 * 还可以访问请求和响应报文头的数据。Spring MVC根据HttpEntity的泛型类型查找对应的HttpMessageConverter。
+	 * 
+	 * 使用StringHttpMessageConverter将请求报文体及报文头的信息绑定到httpEntity中，在方法中可以对相应信息进行访问
+	 * 
+	 * @param httpEntity
+	 * @return
+	 */
+	@RequestMapping(value = "/handle43")
+	public String handle43(HttpEntity<String> httpEntity) {
+		long contentLen = httpEntity.getHeaders().getContentLength();
+		System.out.println(httpEntity.getBody());
+		return "success";
+	}
+	
+	/**
+	 * 在方法中创建HttpEntity<btye[]>对象并返回，ByteArrayHttpMessageConverter负责其写出到响应流中
+	 * 
+	 * @param imageId
+	 * @return
+	 * @throws Throwable
+	 */
+	@RequestMapping(value = "/handle44/{imageId}")
+	public ResponseEntity<byte[]> handle44(
+			@PathVariable("imageId") String imageId) throws Throwable {
+		Resource res = new ClassPathResource("/image.jpg");
+		byte[] fileData = FileCopyUtils.copyToByteArray(res.getInputStream());
+		ResponseEntity<byte[]> responseEntity = new ResponseEntity<byte[]>(fileData, HttpStatus.OK);
+		return responseEntity;
+	}
+	
+	/**
+	 * 支持XML和JSON消息的处理方法
+	 * 
+	 * @param requestEntity
+	 * @return
+	 */
+	@RequestMapping(value = "/handle51")
+	public ResponseEntity<User> handle51(HttpEntity<User> requestEntity) {
+		User user = requestEntity.getBody();
+		user.setUserId("1000");
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
+	/**
+	 * 在方法入参处@ModelAttribute
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/handle61")
+	public String handle61(@ModelAttribute("user") User user) {
+		user.setUserId("1000");
+		return "/user/createSuccess";
+	}
+	
+	/**
+	 * 在此，模型数据会赋给User的入参，
+	 * 然后再根据HTTP请求消息进一步填充覆盖user对象
+	 * 
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/handle62")
+	public String handle62(@ModelAttribute("user") User user) {
+		user.setUserName("tom");
+		return "/user/showUser";
+	}
+	
+	/**
+	 * 访问UserController中任何一个请求处理方法前，Spring MVC先执行该方法，
+	 * 并将返回值以user为键添加到模型中
+	 * 
+	 * @return
+	 */
+	@ModelAttribute("user")
+	public User getUser() {
+		User user = new User();
+		user.setUserId("1001");
+		return user;
+	}
+	
+	@ModelAttribute("user1")
+	public User getUser1() {
+		User user = new User();
+		user.setUserId("1");
+		return user;
+	}
+
+	@ModelAttribute("user2")
+	public User getUser2() {
+		User user = new User();
+		user.setUserId("1");
+		return user;
+	}
+	
+	@ModelAttribute("dept")
+	public Dept getDept() {
+		Dept dept = new Dept();
+		return dept;
+	}
+	
+	/**
+	 * Spring MVC将请求对应的隐含模型
+	 * 对象传递给modelMap，因此在方法
+	 * 中可以通过它访问模型中的数据。
+	 * 
+	 * @param modelMap
+	 * @return
+	 */
+	@RequestMapping(value = "/handle63")
+	public String handle63(ModelMap modelMap) {
+		modelMap.addAttribute("testAttr", "value1");
+		User user = (User) modelMap.get("user");
+		user.setUserName("tom");
+		return "/user/showUser";
+	}
+	
+	/**
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/handle71")
+	public String handle71(@ModelAttribute("user") User user) {
+		user.setUserName("John");
+		return "redirect:handle72.html";
+	}
+	
+	@RequestMapping(value = "/handle72")
+	public String handle72(ModelMap modelMap, SessionStatus sessionStatus) {
+		User user = (User) modelMap.get("user"); // 读取模型中的数据
+		if (user != null) {
+			user.setUserName("Jetty");
+			sessionStatus.setComplete(); // 让Spring MVC清除本处理器对应的回话属性
+		}
+		return "/user/showUser";
+	}
+	
+	@RequestMapping(value = "/handle81")
+	public String handle81(@RequestParam("user") User user, ModelMap modelMap) {
+		modelMap.put("user", user);
+		return "/user/showUser";
+	}
+	
+	@RequestMapping(value = "/handle82")
+	public String handle82(User user) {
+		return "/user/showUser";
+	}
+	
+	@RequestMapping(value = "/handle91")
+	public String handle91(@Valid @ModelAttribute("user") User user,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "/user/register3";
+		} else {
+			return "/user/showUser";
+		}
+	}
+	
+	/**
+	 * 在控制器初始化时调用
+	 * 
+	 * @param binder
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		// 注册指定自定义的编辑器
+		binder.registerCustomEditor(User.class, new UserEditor());
 	}
 
 }
