@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -498,7 +500,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/showUserListByXls")
-	public String showUserListInExcel(ModelMap mm) {
+	public ModelAndView showUserListInExcel(ModelMap mm) {
 		Calendar calendar = new GregorianCalendar();
 
 		List<User> userList = new ArrayList<User>();
@@ -513,12 +515,14 @@ public class UserController {
 		user2.setBirthday(calendar.getTime());
 		userList.add(user1);
 		userList.add(user2);
+        Map model = new HashMap();  
 		mm.addAttribute("userList", userList);
-		return "userListExcel";
+		model.put("userList", userList);
+		return new ModelAndView(new UserListExcelView(), model);
 	}
 	
 	@RequestMapping(value = "/showUserListByPdf")
-	public String showUserListInPdf(ModelMap mm) {
+	public ModelAndView showUserListInPdf(ModelMap mm) {
 		Calendar calendar = new GregorianCalendar();
 
 		List<User> userList = new ArrayList<User>();
@@ -534,7 +538,11 @@ public class UserController {
 		userList.add(user1);
 		userList.add(user2);
 		mm.addAttribute("userList", userList);
-		return "userListPdf";
+		mm.put("view", new UserListPdfView());
+		Map model = new HashMap();  
+		mm.addAttribute("userList", userList);
+		model.put("userList", userList);
+		return new ModelAndView(new UserListPdfView(), model);
 	}
 	
 	/**
