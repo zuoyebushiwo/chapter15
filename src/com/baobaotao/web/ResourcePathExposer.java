@@ -5,14 +5,15 @@ import javax.servlet.ServletContext;
 import org.springframework.web.context.ServletContextAware;
 
 public class ResourcePathExposer implements ServletContextAware {
+
 	private ServletContext servletContext;
 	private String resourceRoot;
 
 	public void init() {
 		String version = "1.2.1";
 		resourceRoot = "/resources-" + version;
-		getServletContext().setAttribute("resourceRoot", 
-				getServletContext().getContextPath()+resourceRoot);
+		getServletContext().setAttribute("resourceRoot",
+				getServletContext().getContextPath() + resourceRoot);
 	}
 
 	public void setServletContext(ServletContext servletContext) {
@@ -25,5 +26,6 @@ public class ResourcePathExposer implements ServletContextAware {
 
 	public ServletContext getServletContext() {
 		return servletContext;
-	}	
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.baobaotao.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,9 +42,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
@@ -515,10 +519,8 @@ public class UserController {
 		user2.setBirthday(calendar.getTime());
 		userList.add(user1);
 		userList.add(user2);
-        Map model = new HashMap();  
 		mm.addAttribute("userList", userList);
-		model.put("userList", userList);
-		return new ModelAndView(new UserListExcelView(), model);
+		return new ModelAndView(new UserListExcelView(), mm);
 	}
 	
 	@RequestMapping(value = "/showUserListByPdf")
@@ -545,6 +547,141 @@ public class UserController {
 		return new ModelAndView(new UserListPdfView(), model);
 	}
 	
+	@RequestMapping(value = "/showUserListByXml")
+	public String showUserListInXml(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		
+		return "userListXml";
+	}
+	
+	@RequestMapping(value = "/showUserListByJson")
+	public ModelAndView showUserListInJson(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return new ModelAndView("userListJson", mm);
+	}
+	
+	@RequestMapping(value = "/showUserListByJson1")
+	public String showUserListInJson1(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆1");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "userListJson1";
+	}
+
+	@RequestMapping(value = "/showUserListByI18n")
+	public String showUserListInI18n(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆1");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "userListi18n";
+	}
+
+	@RequestMapping(value = "/showUserListMix")
+	public String showUserListMix(ModelMap mm) {
+		Calendar calendar = new GregorianCalendar();
+		List<User> userList = new ArrayList<User>();
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setRealName("汤姆1");
+		calendar.set(1980, 1, 1);
+		user1.setBirthday(calendar.getTime());
+		User user2 = new User();
+		user2.setUserName("john");
+		user2.setRealName("约翰");
+		user2.setBirthday(calendar.getTime());
+		userList.add(user1);
+		userList.add(user2);
+		mm.addAttribute("userList", userList);
+		return "userListMix";
+	}
+	
+	@RequestMapping(value = "/uploadPage")
+	public String updatePage() {	
+		return "uploadPage";
+	}
+	
+	@RequestMapping(value = "/upload")
+	public String updateThumb(@RequestParam("name") String name,
+			@RequestParam("file") MultipartFile file) throws Exception {
+		if (!file.isEmpty()) {
+			file.transferTo(new File("D:/imps_upload/"+file.getOriginalFilename()));
+			return "redirect:success.html";
+		}else{
+			return "redirect:fail.html";
+		}
+	}
+	
+	@RequestMapping(value = "/throwException")
+	public String throwException() {
+		if(2>1){
+			throw new RuntimeException("ddd");
+		}
+		return "success";
+	}
+	
+	@ExceptionHandler(RuntimeException.class)
+	public String handleException(RuntimeException re, HttpServletRequest request) {
+		return "forward:/error.jsp";
+	}
+
+	@RequestMapping(value = "/notFound")
+	public String notFound() {
+		return "successdddd";
+	}
+	
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+	public String notFound(HttpServletRequest request) {
+		return "forward:/error.jsp";
+	}	
+	
 	/**
 	 * 在控制器初始化时调用
 	 * 
@@ -553,9 +690,9 @@ public class UserController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		// 注册指定自定义的编辑器
-		binder.registerCustomEditor(User.class, new UserEditor());
+//		binder.registerCustomEditor(User.class, new UserEditor());
 		// 在进行数据绑定时使用校验器
-		binder.setValidator(new UserValidator());
+//		binder.setValidator(new UserValidator());
 	}
 
 }
